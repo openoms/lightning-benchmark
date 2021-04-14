@@ -74,6 +74,20 @@ sudo chmod +x run.sh
 run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning | eclair
 ```
 
+## Results:
+* RaspberryPi4 4GB RAM (quad core ARMv8)
+* 1TB SSD connected to USB 3 with X825 extension board, ext4 filesystem
+* RaspiBlitz 64bit base image (Raspberry OS - Debian Buster)
+
+| Configuration | Transactions / sec | Avg latency (sec) |
+|--|--|--|
+|`clightning`|-| -  |
+|`lnd-bbolt-keysend`| - | - |
+|`lnd-bbolt`| 40.2603 | 2.45042 |
+|`eclair`| - | - |
+|`lnd-etcd`| - | - |
+|`lnd-etcd-cluster`| - | - |
+
 ---
 ## Notes
 ### Manual build of the aarch64 docker-bitcoind
