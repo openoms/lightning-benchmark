@@ -47,7 +47,7 @@ docker-compose --version
 sudo systemctl stop docker
 sudo systemctl stop docker.socket
 sudo mv /var/lib/docker /mnt/hdd/
-sudo ln -s  /mnt/hdd/docker /var/lib/docker
+sudo ln -s /mnt/hdd/docker /var/lib/docker
 sudo systemctl start docker
 sudo systemctl start docker.socket
 ```
@@ -78,7 +78,7 @@ sudo systemctl stop electrs
 ## Run
 ```
 sudo chmod +x run.sh
-run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning | eclair
+./run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning | eclair
 ```
 
 ## Results:
