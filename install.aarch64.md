@@ -52,16 +52,20 @@ sudo systemctl start docker
 sudo systemctl start docker.socket
 ```
 
-## Download the repo and change to the aarch64 bitcoind
+## Download the repo and change to the aarch64 images
 ```
 git clone https://github.com/bottlepay/lightning-benchmark
 cd lightning-benchmark || exit 1
 
+# bitcoind
 sed -i "s#kylemanna/bitcoind#openoms/aarch64-docker-bitcoind#" docker-compose-bbolt.yml
 sed -i "s#kylemanna/bitcoind#openoms/aarch64-docker-bitcoind#" docker-compose-clightning.yml
 sed -i "s#kylemanna/bitcoind#openoms/aarch64-docker-bitcoind#" docker-compose-eclair.yml
 sed -i "s#kylemanna/bitcoind#openoms/aarch64-docker-bitcoind#" docker-compose-etcd-cluster.yml
 sed -i "s#kylemanna/bitcoind#openoms/aarch64-docker-bitcoind#" docker-compose-etcd.yml
+
+# clightning
+sed -i "s#elementsproject/lightningd:v0.9.3#openoms/clightning-linuxarm64v8:ade10e7fc4dacbb9d635b05152c7dc38c0896ce7#g" docker-compose-clightning.yml
 ```
 ## Switch off the running applications
 ```
@@ -121,7 +125,10 @@ docker build --build-arg USER_ID=$( id -u bitcoind ) --build-arg GROUP_ID=$(  id
 ### Upload the docker image
 https://www.techrepublic.com/article/how-to-create-a-docker-image-and-push-it-to-docker-hub/
 ```
-# running the benchmark will create the container
+# running a benchmark will create the container
+# list containers
+docker ps -a
+# commit
 docker commit -m "add aarch64 bitcoind image" -a "openoms" lightning-benchmark_bitcoind_1 openoms/aarch64-docker-bitcoind
 # sha256:2e3335bab7f94e10536f224f3d4343c2c42dcc5c635af52356aa3bc2decc5422
 docker login
@@ -147,3 +154,38 @@ docker push openoms/aarch64-docker-bitcoind
 `awk '{ total += $7; count++ } END { print "tps average: "total/count }' tps.txt`
 * for latency average:  
 `awk '{ total += $11; count++ } END { print "latency average (sec): "total/count }' tps.txt`
+
+### Build and upload the aarch64 clightning docker image
+```
+# build the docker image on the RPi4
+git clone https://github.com/ElementsProject/lightning.git
+cd lightning
+docker build -t clightning-linuxarm64v8 -f contrib/linuxarm64v8.Dockerfile .
+
+# run benchmark with the locally built image
+sed -i "s#elementsproject/lightningd:v0.9.3#openoms/clightning-linuxarm64v8#g" docker-compose-clightning.yml
+./run.sh clightning
+
+# list containers
+docker ps -a
+
+# commit (tag with the latest commit has in https://github.com/ElementsProject/lightning)
+docker commit -m "add aarch64 clightning image" -a "openoms" lightning-benchmark_clightning-alice_1 openoms/clightning-linuxarm64v8:ade10e7fc4dacbb9d635b05152c7dc38c0896ce7
+# sha256:07f81a4e403fe330cbe2a96ed6393a17965e7bc3b3bdaebad56a8bca1f517084
+
+# upload image to dockerhub 
+docker login
+docker push openoms/clightning-linuxarm64v8:ade10e7fc4dacbb9d635b05152c7dc38c0896ce7
+# The push refers to repository [docker.io/openoms/clightning-linuxarm64v8]
+# c8ea7e0b9521: Pushed 
+# 8406f4e29e80: Pushed 
+# 9b58aa07dc31: Pushed 
+# 0202be3386c4: Pushed 
+# 6081601076ab: Pushed 
+# 723b4f743d0f: Pushed 
+# 3c1c1ace6109: Pushed 
+# 3ce8dc6f62f4: Pushed 
+# f91f3ceae618: Pushed 
+# cd6db239ed26: Mounted from library/debian 
+# ade10e7fc4dacbb9d635b05152c7dc38c0896ce7: digest: sha256:ce36fa1a2b453485a9878bc2b654eff66aa098acd0bc748abbf5e9941a51a827 size: 2415
+```
