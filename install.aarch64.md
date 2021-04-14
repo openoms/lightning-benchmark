@@ -85,7 +85,7 @@ run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning 
 | Configuration | Transactions / sec | Avg latency (sec) |
 |--|--|--|
 |`clightning`|-| -  |
-|`lnd-bbolt-keysend`| - | - |
+|`lnd-bbolt-keysend`| 41.3718 | 2.00833 |
 |`lnd-bbolt`| 40.2603 | 2.45042 |
 |`eclair`| - | - |
 |`lnd-etcd`| - | - |
