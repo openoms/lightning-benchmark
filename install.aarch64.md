@@ -88,9 +88,9 @@ run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning 
 
 | Configuration | Transactions / sec | Avg latency (sec) |
 |--|--|--|
-|`clightning`|-| -  |
-|`lnd-bbolt-keysend`| 41.3718 | 2.00833 |
-|`lnd-bbolt`| 40.2603 | 2.45042 |
+|`clightning`| 34 | 2.5 |
+|`lnd-bbolt-keysend`| 41 | 2.0 |
+|`lnd-bbolt`| 40 | 2.5 |
 |`eclair`| - | - |
 |`lnd-etcd`| - | - |
 |`lnd-etcd-cluster`| - | - |
@@ -147,14 +147,6 @@ docker push openoms/aarch64-docker-bitcoind
 # latest: digest: sha256:56c50e934c829dd6ed76f0b3e3019f0b5c6c04d4da7c75f45d010307f555242b size: 2195
 
 ```
-
-### Calculate averages in bash
-* paste the results to a `.txt`
-* for TPS average:  
-`awk '{ total += $7; count++ } END { print "tps average: "total/count }' tps.txt`
-* for latency average:  
-`awk '{ total += $11; count++ } END { print "latency average (sec): "total/count }' tps.txt`
-
 ### Build and upload the aarch64 clightning docker image
 ```
 # build the docker image on the RPi4
@@ -189,3 +181,10 @@ docker push openoms/clightning-linuxarm64v8:ade10e7fc4dacbb9d635b05152c7dc38c089
 # cd6db239ed26: Mounted from library/debian 
 # ade10e7fc4dacbb9d635b05152c7dc38c0896ce7: digest: sha256:ce36fa1a2b453485a9878bc2b654eff66aa098acd0bc748abbf5e9941a51a827 size: 2415
 ```
+
+### Calculate the averages in bash
+* paste the results to a `.txt`
+* for TPS average:  
+`awk '{ total += $7; count++ } END { print "tps average: "total/count }' tps.txt`
+* for latency average:  
+`awk '{ total += $11; count++ } END { print "latency average (sec): "total/count }' tps.txt`
