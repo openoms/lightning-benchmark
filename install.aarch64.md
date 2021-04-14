@@ -82,9 +82,17 @@ run.sh lnd-bbolt | lnd-bbolt-keysend | lnd-etcd | lnd-etcd-cluster | clightning 
 ```
 
 ## Results:
+
+Test results after 10,000 payments on the following machine:
+
 * RaspberryPi4 4GB RAM (quad core ARMv8)
-* 1TB SSD connected to USB 3 with X825 extension board, ext4 filesystem
+* 1TB Sandisk Ultra SSD 
+* connected to USB 3.1 with an X825 extension board
+* ext4 filesystem
+* extra power for the SSD (dual 5V USB-C + barrel connector)
+* passive cooling (50-55 degrees Celsius)
 * RaspiBlitz 64bit base image (Raspberry OS - Debian Buster)
+  
 
 | Configuration | Transactions / sec | Avg latency (sec) |
 |--|--|--|
