@@ -3,6 +3,7 @@ used a RaspiBlitz v1.7 base image (based on https://www.raspberrypi.org/forums/v
 
 ## Install Docker
 ```
+# dependencies
 sudo apt-get update
 sudo apt-get install \
     apt-transport-https \
@@ -10,9 +11,13 @@ sudo apt-get install \
     curl \
     gnupg \
     lsb-release
+
+# add the docker repo
 echo \
   "deb [arch=arm64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian \
   $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+# install docker
 sudo apt-get install docker-ce docker-ce-cli containerd.io
 
 # add the default user to the docker group
@@ -25,11 +30,9 @@ sudo docker run hello-world
 
 ## Install docker-compose
 ```
-# sudo curl -L "https://github.com/docker/compose/releases/download/1.29.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-# sudo chmod +x /usr/local/bin/docker-compose
-
 sudo pip3 install docker-compose
-# https://docs.docker.com/compose/completion/
+
+# add bash completion  https://docs.docker.com/compose/completion/
 sudo curl \
     -L https://raw.githubusercontent.com/docker/compose/1.29.0/contrib/completion/bash/docker-compose \
     -o /etc/bash_completion.d/docker-compose
