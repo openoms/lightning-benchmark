@@ -89,16 +89,15 @@ Test results after 10,000 payments on the following machine:
 * 1TB Sandisk Ultra SSD 
 * connected to USB 3.1 with an X825 extension board
 * ext4 filesystem
-* extra power for the SSD (dual 5V USB-C + barrel connector)
+* power: 3A 5V USB-C (max power draw: 1.457 A, 5.18 V)
 * passive cooling (50-55 degrees Celsius)
 * RaspiBlitz 64bit base image (Raspberry OS - Debian Buster)
   
-
 | Configuration | Transactions / sec | Avg latency (sec) |
 |--|--|--|
-|`clightning`| 34 | 2.5 |
-|`lnd-bbolt-keysend`| 41 | 2.0 |
-|`lnd-bbolt`| 40 | 2.5 |
+|`clightning`| 36 | 2.6 |
+|`lnd-bbolt-keysend`| 42 | 2.0 |
+|`lnd-bbolt`| 40 | 2.4 |
 |`eclair`| - | - |
 |`lnd-etcd`| - | - |
 |`lnd-etcd-cluster`| - | - |
